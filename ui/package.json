@@ -1,7 +1,53 @@
 {
+  "name": "discord-tickets-app",
+  "author": "Mars",
+  "description": "A simple way to interact with Script-Ware dashboard support tickets through the use of Discord channels.",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "npm i && cd ../ui/ && npm i && cd ../boostrapper/ && asar pack ../ui/ ./defaults/ui.asar && electron-builder build --publish never"
+  },
+  "devDependencies": {
+    "electron": "12.2.1"
+  },
+  "build": {
+    "appId": "mars7383.discord-tickets-app",
+    "productName": "SW Tickets for Discord",
+    "files": [
+      "defaults/**/*",
+      "package.json",
+      "index.js",
+      "node_modules/**/*"
+    ],
+    "extraFiles": [
+      "defaults/**/*"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "defaults/electron.png"
+    },
+    "portable": {
+      "artifactName": "SW Discord Tickets.exe"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "defaults/electron.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "defaults/electron.png"
+    },
+    "extends": null
+  },
   "dependencies": {
     "adm-zip": "^0.5.9",
-    "keytar": "^7.9.0",
-    "xterm": "^5.0.0"
+    "keytar": "^7.9.0"
   }
 }

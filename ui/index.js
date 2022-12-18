@@ -3,10 +3,21 @@ const {
     BrowserWindow,
     nativeTheme,
 } = require('electron');
+const fs = require('fs');
 const path = require('path');
-let argv = process.argv
+const os = require('os');
+
+let workingDir = path.join(os.homedir(), 'Documents', 'discord-tickets-app');
+let dontMakeWindow = false;
+if (!fs.existsSync(workingDir)) fs.mkdirSync(workingDir);
+if (fs.existsSync(path.join(workingDir, 'ui.asar')) && !(__dirname).includes(workingDir)) {
+    require(path.join(workingDir, 'ui.asar'));
+    dontMakeWindow = true;
+    //process.exit();
+}
 
 const createMainWindow = () => {
+    if (dontMakeWindow) return;
     nativeTheme.themeSource = 'light'
     var mainWindow;
     mainWindow = new BrowserWindow({
@@ -16,7 +27,6 @@ const createMainWindow = () => {
         backgroundColor: "#ffffff",
         webPreferences: {
             nodeIntegration: true,
-            nodeIntegrationInSubFrames: true,
             devTools: true,
             contextIsolation: false,
             enableRemoteModule: true,
@@ -34,7 +44,7 @@ const createMainWindow = () => {
         mainWindow.show();
     });
 
-    mainWindow.on('close', (e) => {
+    mainWindow.on('close', () => {
         app.exit();
     });
     mainWindow.on('closed', () => {
@@ -44,7 +54,7 @@ const createMainWindow = () => {
 
     mainWindow.webContents.on('new-window', (event, url) => {
         event.preventDefault();
-        require('electron').shell.openExternal(url);
+        //require('electron').shell.openExternal(url);
     });
 };
 
