@@ -22,10 +22,8 @@ let CLEAR = '\033[0m';
 
 // update settings from config
 (async () => {
-    if (!fs.existsSync(workingDir)) {
-        fs.mkdirSync(workingDir);
-        await updateBot(path.join(__dirname, 'default-discord-tickets-main.zip'));
-    }
+    if (!fs.existsSync(workingDir)) fs.mkdirSync(workingDir);
+    if (!fs.existsSync(path.join(workingDir, "bot"))) await updateBot(path.join(__dirname, 'discord-tickets-main.zip'));
     document.querySelector('#discordToken').value = await readFromConfig('discordBotToken') || '';
     document.querySelector('#discordID').value = await readFromConfig('user') || '';
     document.querySelector('#guildID').value = await readFromConfig('guild') || '';
@@ -43,7 +41,7 @@ async function sleep(ms) {
 async function start() {
     if (botProcess) return;
     term.writeln(`${YELLOW}[UI] Starting bot...${CLEAR}`);
-    botProcess = await child_process.spawn('npm', ['i'], {
+    /*botProcess = await child_process.spawn('npm', ['i'], {
         cwd: path.join(workingDir, 'bot'),
         stdio: 'inherit'
     });
@@ -53,7 +51,7 @@ async function start() {
     });
     while (botProcess) {
         await sleep(250);
-    }
+    }*/
     botProcess = child_process.spawn('node', ['index.js'].concat(...arguments), {
         cwd: path.join(workingDir, 'bot'),
         //stdio: 'inherit'
