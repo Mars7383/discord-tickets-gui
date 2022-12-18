@@ -6,7 +6,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "npm i && cd ../ui/ && npm i && cd ../boostrapper/ && asar pack ../ui/ ./defaults/ui.asar && electron-builder build --publish never"
+    "build": "npm i && electron-builder build --publish never"
   },
   "devDependencies": {
     "electron": "12.2.1"
