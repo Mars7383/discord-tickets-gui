@@ -1,0 +1,34 @@
+{
+  "name": "discord-tickets-app",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "asar pack ../ui/ ./defaults/ui.asar && electron-builder build -mwl --publish never"
+  },
+  "devDependencies": {
+    "electron": "12.2.1"
+  },
+  "build": {
+    "appId": "mars7383.discord-tickets-app",
+    "productName": "SW Tickets for Discord",
+    "files": [
+      "defaults/**/*",
+      "package.json",
+      "index.js"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "defaults/electron.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "defaults/electron.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "defaults/electron.png"
+    },
+    "extends": null
+  }
+}

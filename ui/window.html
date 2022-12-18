@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Script-Ware Staff Panel for Discord</title>
+        <link rel="stylesheet" href="luci_lol.css">
+        <style>
+            body {
+                overflow-x: hidden;
+                overflow-y: hidden;
+            }
+            h4 {
+                font-family: "Open Sans", sans-serif;
+            }
+            /* account div and preferences div need to be side-by-side */
+            #wrapper {
+                overflow: hidden; /* will contain if #first is longer than #second */
+            }
+            #account {
+                width: 50%;
+                float:left; /* add this */
+                padding: 10px;
+            }
+            #preferences {
+                width: 50%;
+                overflow: hidden;
+                padding: 10px;
+            }
+            #console {
+                width: 100%;
+                padding: 10px;
+            }
+            #terminal {
+                width: 100%;
+                height: 300px;
+                resize: none;
+                overflow: auto;
+                background-color: #000;
+                color: #fff;
+                /* rounded corners, no border */
+                border-radius: 5px;
+                border: none;
+            }
+        </style>
+        <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+        <script src="node_modules/xterm/lib/xterm.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+        <div id="account">
+            <h4>Account</h4>
+            <!--<button id="login" class="btn btn-sm btn-primary mt-1">Log into Script-Ware</button>-->
+            <div class="form-group">
+                <label for="login">Script-Ware Account</label><br>
+                <span id="account-output" class="help-block error-help-block">Not logged in.</span><br>
+                <button id="login" onclick="login()" class="btn btn-sm btn-primary mt-1">Log in</button> 
+                <button id="loginM" onclick="login('m')" class="btn btn-sm btn-primary mt-1">Log in with Script-Ware M</button> 
+                <button id="logout" onclick="logout()" class="btn btn-sm btn-danger mt-1">Log out</button>
+            </div>
+            <div class="form-group">
+                <label for="username">Discord Bot Token</label>
+                <input class="form-control form-control-sm" id="discordToken" type="password" value="" onchange="writeToConfig('discordBotToken', this.value)">
+            </div>
+            <div class="form-group">
+                <label for="username">Your Discord ID</label>
+                <input class="form-control form-control-sm" id="discordID" type="text" value="" onchange="writeToConfig('user', this.value)">
+            </div>
+            <!--<input id="discordToken" placeholder="Discord bot token..."></input>-->
+        </div>
+        <div id="preferences">
+            <h4>Preferences</h4>
+
+            <div class="form-group">
+                <label for="guildID">Guild ID</label>
+                <input class="form-control form-control-sm" id="guildID" type="text" value="" onchange="writeToConfig('guild', this.value)">
+            </div>
+
+            <div class="form-group">
+                <label for="prefix">Prefix</label>
+                <input class="form-control form-control-sm" id="prefix" type="text" width="15px" value="?" onchange="writeToConfig('prefix', this.value)">
+            </div>
+            
+            <div class="custom-control custom-checkbox">
+                <div class="col-md-4">
+                    <input class="custom-control-input" id="newMsgsPing" checked="checked" name="newMsgsPing" type="checkbox" style="left: -0.75rem;" onchange="writeToConfig('ghostPingOnNewMessage', this.checked)">
+                    <label class="custom-control-label" for="newMsgsPing" style="width:1000px; left: -0.75rem;">Ping for new messages</label>
+                </div>
+            </div>
+            <br>
+            <!--<button id="savePrefs" class="btn btn-sm btn-primary mt-1">Save</button>-->
+            <button id="openConfig" class="btn btn-sm btn-primary mt-1" onclick="openConfig()">Open Config File</button>
+            <button id="openConfig" class="btn btn-sm btn-primary mt-1" onclick="updateBot()">Update Bot</button>
+        </div>
+        </div>
+        <div id="console">
+            <h4>Console</h4>
+            <div id="terminal"></div>
+            <center><div class="form-group">
+                <button id="start" onclick="start()" class="btn btn-primary mt-1">Start</button>
+                <button id="stop" onclick="kill()" class="btn btn-danger mt-1">Stop</button>
+                <button id="reset" onclick="reset()" class="btn btn-danger mt-1">Reset Channels</button>
+            </div></center>
+        </div>
+        <script src="client-main.js"></script>
+    </body>
+</html>
