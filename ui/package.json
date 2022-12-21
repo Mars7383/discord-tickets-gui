@@ -13,11 +13,15 @@
   },
   "build": {
     "appId": "mars7383.discord-tickets-app",
-    "productName": "SW Tickets for Discord",
+    "productName": "Tickets",
     "files": [
-      "defaults/**/*",
-      "package.json",
+      "client-main.js",
       "index.js",
+      "luci_lol.css",
+      "package.json",
+      "window.html",
+      "discord-tickets-main.zip",
+      "xterm/**/*",
       "node_modules/**/*"
     ],
     "extraFiles": [
@@ -30,7 +34,7 @@
       "icon": "defaults/electron.png"
     },
     "portable": {
-      "artifactName": "SW Discord Tickets.exe"
+      "artifactName": "Tickets.exe"
     },
     "mac": {
       "target": [

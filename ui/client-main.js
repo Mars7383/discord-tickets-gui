@@ -19,6 +19,11 @@ let BLUE = '\033[1;34m';
 let LGRAY = '\033[0;37m';
 let WHITE = '\033[1;37m';
 let CLEAR = '\033[0m';
+let RED_BG = '\033[41m';
+/*if (__dirname.includes(" ")) {
+    term.writeln(`${LRED}The path to this app contains spaces. To avoid errors, please move it to a path without spaces.${CLEAR}`);
+    term.writeln(__dirname.replace(/ /g, `${RED_BG} ${CLEAR}`) + "\n");
+}*/
 
 // update settings from config
 (async () => {
@@ -127,7 +132,9 @@ async function updateBot(pathToZip) {
         term.writeln(`${YELLOW}[UI] Deleting old bot files...${CLEAR}`);
         if (fs.existsSync(path.join(workingDir, 'bot')))
             deleteFolderRecursive(path.join(workingDir, 'bot'));
-        let zip = new AdmZip(file.filePaths[0]);
+        //copy the zip to the destination before extraction to prevent issues with AdmZip
+        fs.copyFileSync(file.filePaths[0], path.join(workingDir, 'discord-tickets-main.zip'));
+        let zip = new AdmZip(path.join(workingDir, 'discord-tickets-main.zip'));
         term.writeln(`${YELLOW}[UI] Unzipping new bot...${CLEAR}`);
         // extract everything into the bot folder in the working directory
         await zip.extractAllTo(path.join(workingDir), true);
